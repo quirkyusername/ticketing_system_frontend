@@ -19,7 +19,7 @@ const Tickets = ({tickets}) => {
                 </TableHead>
                 <TableBody>
                 {tickets.map((ticket) => {                    
-                    return <Ticket key={ticket.id} {...ticket}/>
+                    return <Ticket key={ticket.id} ticket={ticket}/>
                 }
                 )}
                 </TableBody>

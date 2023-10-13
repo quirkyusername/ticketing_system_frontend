@@ -1,17 +1,11 @@
 import { TableCell, TableRow } from '@mui/material';
 import React from 'react'
-
-const Ticket = ({id,title, description}) => {
+import Ticket_Update from './Ticket_Update';
+const Ticket = ({ticket}) => {
+  const {id,title, description} = {...ticket}
   return (
-    // <article>
-        
-        
-    //         <p>{title}</p>
-        
-        
-    //         <p>{description}</p>
-        
-    // </article>
+
+    
 
     <TableRow
         key={id}
@@ -22,6 +16,9 @@ const Ticket = ({id,title, description}) => {
         </TableCell>
         <TableCell align="right">{title}</TableCell>
         <TableCell align="right">{description}</TableCell>
+        <TableCell align='right'>
+            <Ticket_Update ticket={ticket}></Ticket_Update>
+        </TableCell>
     </TableRow>
   );
 }
