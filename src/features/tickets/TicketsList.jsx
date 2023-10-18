@@ -1,11 +1,17 @@
 import React from 'react'
 import Ticket from './Ticket'
 import { Table, TableContainer, TableHead,TableRow,TableBody,TableCell, Paper } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
-
-const Tickets = ({tickets}) => {
+const TicketsList = ({tickets}) => {
+  const navigate  = useNavigate()
   return (
     <section>
+        <div>
+            <button className='btn' onClick={()=>{navigate(`/tickets/create-ticket`)}}>
+                Create New Ticket
+            </button>
+        </div>
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
@@ -30,4 +36,4 @@ const Tickets = ({tickets}) => {
   )
 }
 
-export default Tickets
+export default TicketsList
