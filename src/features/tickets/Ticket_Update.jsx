@@ -1,9 +1,11 @@
 import React from 'react'
+import { useParams } from 'react-router-dom'
 
-const Ticket_Update = (ticket) => {
+const Ticket_Update = () => {
+  const {id} = useParams()
   return (
     
-    <button className='btn'>Update</button>
+    <div>Ticket number {id} update page. </div>
   )
 }
 
