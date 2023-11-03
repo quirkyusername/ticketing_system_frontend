@@ -6,6 +6,7 @@ import Ticket_Create from './features/tickets/Ticket_Create'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Tickets from './features/tickets/Tickets'
 import Ticket_Update from './features/tickets/Ticket_Update'
+import Ticket_Delete from './features/tickets/Ticket_Delete'
 
 function App() {
   const [tickets, setTickets] = useState(tickets_data) 
@@ -17,7 +18,8 @@ function App() {
         <Route path='tickets' element={<Tickets />}>
           <Route path='tickets-list' element={<TicketsList tickets={tickets}/>}/>
           <Route path='create-ticket' element={<Ticket_Create/>} />
-          <Route path='update-ticket/:id' element={<Ticket_Update/>}/>            
+          <Route path='update-ticket/:id' element={<Ticket_Update/>}/>
+          <Route path='delete-ticket/:id' element={<Ticket_Delete/>}/>
         </Route>       
       </Routes>
     </Router>
