@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import DropDown from '../form-components/DropDown'
 
 const Ticket_Create = () => {
-  const [formData, setFormData] = useState({issue_subject: '', issue_description:'', status_id:null, status_update_msg:'', StatusId:1});
+  const [formData, setFormData] = useState({issue_subject: '', issue_description:'', status_id:null, status_update_msg:''});
   const [statusData, setStatusData] = useState();
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
