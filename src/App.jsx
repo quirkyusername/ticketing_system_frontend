@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Tickets from './features/tickets/Tickets'
 import Ticket_Update from './features/tickets/Ticket_Update'
 import Ticket_Delete from './features/tickets/Ticket_Delete'
+import Redirect_After_Success from './features/helpers/Redirect_After_Success.jsx'
 
 function App() {
   const [tickets, setTickets] = useState(tickets_data) 
@@ -20,7 +21,8 @@ function App() {
           <Route path='create-ticket' element={<Ticket_Create/>} />
           <Route path='update-ticket/:id' element={<Ticket_Update/>}/>
           <Route path='delete-ticket/:id' element={<Ticket_Delete/>}/>
-        </Route>       
+        </Route>
+        <Route path='redirect-after-success' element={<Redirect_After_Success/>}/>    
       </Routes>
     </Router>
     </main>

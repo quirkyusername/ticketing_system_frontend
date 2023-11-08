@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import DropDown from '../form-components/DropDown'
+import { CircularProgress } from '@mui/material';
+import Redirect_After_Success from '../helpers/Redirect_After_Success';
+import { useNavigate } from 'react-router-dom';
 
 const Ticket_Create = () => {
   const [formData, setFormData] = useState({issue_subject: '', issue_description:'', status_id:null});
   const [statusData, setStatusData] = useState();
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
-
+  const navigate = useNavigate();
   useEffect(()=> {
     const url = `https://localhost:7096/api/status`;
     fetch(url,{method: 'GET'})
@@ -25,8 +28,10 @@ const Ticket_Create = () => {
   const handleSubmit = (event)=>{
     event.preventDefault();
     console.log(formData);
-    setErrors(validateValues(formData))
-    setSubmitting(true)
+    if(!submitting){
+      setErrors(validateValues(formData))
+      setSubmitting(true)
+    }
   };
 
   const validateValues = (inputValues) => {
@@ -42,7 +47,7 @@ const Ticket_Create = () => {
 
   useEffect(() => {
     if (Object.keys(errors).length === 0 && submitting) {
-      setSubmitting(false)      
+            
       const url =`https://localhost:7096/api/Ticket`;
       const postRequestOptions = {
         method: 'POST', 
@@ -53,12 +58,21 @@ const Ticket_Create = () => {
       .then((response)=>response.json())
       .then((data)=>{
         console.log(`server response after post:${JSON.stringify(data)}`);
-      }).catch((error)=>{console.error(error)})
+        navigate(`/redirect-after-success/?operation_msg=Ticket&redirect_page_name=Tickets List&redirect_url=/tickets/tickets-list`)
+        // <Redirect_After_Success operation_msg='Ticket creation' redirect_page_name='Tickets List' redirect_url={`/tickets/tickets-list`}></Redirect_After_Success>
+        setSubmitting(false);
+      }).catch((error)=>{
+        console.error(error);
+        setSubmitting(false);
+      })
     }
   }, [errors]);
 
   if (statusData === undefined) {
-    return <>Still loading...</>;
+    return <>
+      <CircularProgress />
+      <label>Still loading...</label>
+    </>;
   }
   
   return (
