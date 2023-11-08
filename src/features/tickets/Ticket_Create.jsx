@@ -2,30 +2,20 @@ import React, { useEffect, useState } from 'react'
 import DropDown from '../form-components/DropDown'
 
 const Ticket_Create = () => {
-  const [formData, setFormData] = useState({issue_subject: '', issue_description:'', status_id:null, status_update_msg:''});
+  const [formData, setFormData] = useState({issue_subject: '', issue_description:'', status_id:null});
   const [statusData, setStatusData] = useState();
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
-
-  
-  // function renameKey ( obj, oldKey, newKey ) {
-  // obj[newKey] = obj[oldKey];
-  // delete obj[oldKey];
-  // }
 
   useEffect(()=> {
     const url = `https://localhost:7096/api/status`;
     fetch(url,{method: 'GET'})
     .then((response)=>response.json())
     .then((data)=> {
-      // const arr = JSON.parse(data);
-      // data.forEach( obj => renameKey( obj, 'id', 'status_id' ) );
-      // const updatedJson = JSON.stringify( data );
-      console.log(data);
       setStatusData(data);
       setFormData((prevFormData)=>({...prevFormData, 'status_id':data[0].id}));
     })
-    .catch((error)=>{console.log(error)})
+    .catch((error)=>{console.error(error)})
   },[]);
   
   const handleChange = (event)=>{
@@ -50,14 +40,9 @@ const Ticket_Create = () => {
     return errors;
   };
 
-  const finishSubmit = () => {
-    setSubmitting(false)
-    console.log(formData);
-  };
-
   useEffect(() => {
     if (Object.keys(errors).length === 0 && submitting) {
-      finishSubmit();
+      setSubmitting(false)      
       const url =`https://localhost:7096/api/Ticket`;
       const postRequestOptions = {
         method: 'POST', 
@@ -67,8 +52,8 @@ const Ticket_Create = () => {
       fetch(url, postRequestOptions)
       .then((response)=>response.json())
       .then((data)=>{
-        console.log(`server response after post:${data}`);
-      })
+        console.log(`server response after post:${JSON.stringify(data)}`);
+      }).catch((error)=>{console.error(error)})
     }
   }, [errors]);
 
@@ -85,14 +70,11 @@ const Ticket_Create = () => {
         {errors.issue_subject ? <p className='error'>{errors.issue_subject}</p>:null}
         <label htmlFor='issue_description'>Issue Description:</label>
         <input type='text' id='issue_description' name='issue_description' value={formData.issue_description} onChange={handleChange}/>
-        <label htmlFor='status_update_msg'>Ticket Updates:</label>
-        <input type='text' id='status_update_msg' name='status_update_msg' value={formData.status_update_msg} onChange={handleChange}/>
-        
+        {errors.issue_description ? <p>{errors.issue_description}</p> : null}
         <DropDown onHandleChange = {setFormData} dropDownData = {statusData} selectOptionId = 'status_id' />
-
+        {errors.status_id ? <p>{errors.status_id}</p> : null}
         <button type='submit'>Create Ticket</button>
       </form>
-      
     </>
     
   );

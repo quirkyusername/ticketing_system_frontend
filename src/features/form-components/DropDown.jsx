@@ -5,7 +5,6 @@ const DropDown = (props) => {
 	const handleDropdownChange = (event) => {
 		setSelectedOption(event.target.value);
     const {name, value} = event.target;
-    console.log(`name:${name}`)
     props.onHandleChange((prevFormData)=>({...prevFormData,[event.target[event.target.selectedIndex].id]:value}));
 	};
   const optionId = props.selectOptionId
