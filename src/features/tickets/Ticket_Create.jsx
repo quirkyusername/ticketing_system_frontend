@@ -10,6 +10,7 @@ const Ticket_Create = () => {
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
+  
   useEffect(()=> {
     const url = `https://localhost:7096/api/status`;
     fetch(url,{method: 'GET'})
