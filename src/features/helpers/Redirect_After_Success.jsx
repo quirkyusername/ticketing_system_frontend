@@ -2,7 +2,6 @@ import { CircularProgress } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-// const Redirect_After_Success = ({operation_msg,redirect_page_name, redirect_url}) =>{
 const Redirect_After_Success = () =>{
   const navigate = useNavigate();
   const [progress, setProgress] = useState(10);
@@ -11,14 +10,7 @@ const Redirect_After_Success = () =>{
   const redirect_page_name = queryParameters.get('redirect_page_name')
   const redirect_url = queryParameters.get('redirect_url')
 
-  useEffect (()=>{
-    // const timer = setInterval(() => {
-    //   setProgress((prevProgress) => (prevProgress + 10)); 
-    // }, 400);
-
-    // return () => {
-    //   clearInterval(timer);
-    // };
+  useEffect (()=>{    
     if (progress<=90){
       setTimeout(()=>{
         setProgress((prevProgress) => (prevProgress + 10));
