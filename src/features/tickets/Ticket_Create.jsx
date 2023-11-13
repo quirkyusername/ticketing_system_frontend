@@ -59,7 +59,7 @@ const Ticket_Create = () => {
       .then((response)=>response.json())
       .then((data)=>{
         console.log(`server response after post:${JSON.stringify(data)}`);
-        navigate(`/redirect-after-success/?operation_msg=Ticket&redirect_page_name=Tickets List&redirect_url=/tickets/tickets-list`)
+        navigate(`/redirect-after-success/?operation-msg=Ticket&redirect-page-name=Tickets List&redirect-url=/tickets/tickets-list`)
         // <Redirect_After_Success operation_msg='Ticket creation' redirect_page_name='Tickets List' redirect_url={`/tickets/tickets-list`}></Redirect_After_Success>
         setSubmitting(false);
       }).catch((error)=>{

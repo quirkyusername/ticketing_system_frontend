@@ -6,12 +6,12 @@ const Redirect_After_Success = () =>{
   const navigate = useNavigate();
   const [progress, setProgress] = useState(10);
   const [queryParameters] = useSearchParams()
-  const operation_msg = queryParameters.get('operation_msg')
-  const redirect_page_name = queryParameters.get('redirect_page_name')
-  const redirect_url = queryParameters.get('redirect_url')
+  const operation_msg = queryParameters.get('operation-msg')
+  const redirect_page_name = queryParameters.get('redirect-page-name')
+  const redirect_url = queryParameters.get('redirect-url')
 
   useEffect (()=>{    
-    if (progress<=90){
+    if (progress<90){
       setTimeout(()=>{
         setProgress((prevProgress) => (prevProgress + 10));
       },400)
