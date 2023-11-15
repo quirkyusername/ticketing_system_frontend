@@ -1,22 +1,24 @@
 import React, { useState } from 'react'
 
 const DropDown = (props) => {
-  const [selectedOption, setSelectedOption] = useState(props.dropDownData[0].id);
+  const [selectedOption, setSelectedOption] = useState(props.selectedOption?props.selectedOption : 0);
 	const handleDropdownChange = (event) => {
 		setSelectedOption(event.target.value);
-    const {name, value} = event.target;
-    props.onHandleChange((prevFormData)=>({...prevFormData,[event.target[event.target.selectedIndex].id]:value}));
+    const {name, value} = event.target;    
+    props.onHandleChange((prevFormData)=>({...prevFormData,[name]:value}));
 	};
-  const optionId = props.selectOptionId
+  const selectName = props.selectName ? props.selectName : "selectName"
   return  (
     <div>
       <label>
-        Select an option:
-          <select name={optionId} value={selectedOption} label='Status' onChange={handleDropdownChange}>
+        Current Status:
+          <select name={selectName} value={selectedOption} label='Status' onChange={handleDropdownChange}>            
+            <option value='0' disabled>-- select status --</option>
             {props.dropDownData.map((data)=>(
-              <option key={data.id} id={optionId} value={data.id}>
+              <option key={data.id} value={data.id}>
                 {data.status}
-              </option>))}            
+              </option>))
+            }            
           </select>
       </label>
       <p>Selected option: {selectedOption}</p>
@@ -24,4 +26,4 @@ const DropDown = (props) => {
 	);
 }
 
-export default DropDown;
+export default DropDown
