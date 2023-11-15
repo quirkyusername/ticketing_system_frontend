@@ -16,8 +16,7 @@ const Ticket_Create = () => {
     fetch(url,{method: 'GET'})
     .then((response)=>response.json())
     .then((data)=> {
-      setStatusData(data);
-      setFormData((prevFormData)=>({...prevFormData, 'status_id':data[0].id}));
+      setStatusData(data);      
     })
     .catch((error)=>{console.error(error)})
   },[]);
@@ -29,9 +28,9 @@ const Ticket_Create = () => {
   const handleSubmit = (event)=>{
     event.preventDefault();
     console.log(formData);
-    if(!submitting){
-      setErrors(validateValues(formData))
-      setSubmitting(true)
+    setErrors(validateValues(formData));
+    if(!submitting){    
+      setSubmitting(true);
     }
   };
 
@@ -41,14 +40,14 @@ const Ticket_Create = () => {
       errors.issue_subject = `Subject can't be less than 3 characters long`;
     if(formData.issue_description.length < 20)
       errors.issue_description = `Issue Description can't be less than 20 characters long`;
-    if(!status_id)
+    if(!formData.status_id)
       errors.status_id = `Current status can't be left empty`;
     return errors;
   };
 
   useEffect(() => {
-    if (Object.keys(errors).length === 0 && submitting) {
-            
+    if (Object.keys(errors).length === 0 && submitting) 
+    {
       const url =`https://localhost:7096/api/Ticket`;
       const postRequestOptions = {
         method: 'POST', 
@@ -59,12 +58,11 @@ const Ticket_Create = () => {
       .then((response)=>response.json())
       .then((data)=>{
         console.log(`server response after post:${JSON.stringify(data)}`);
-        navigate(`/redirect-after-success/?operation-msg=Ticket&redirect-page-name=Tickets List&redirect-url=/tickets/tickets-list`)
-        // <Redirect_After_Success operation_msg='Ticket creation' redirect_page_name='Tickets List' redirect_url={`/tickets/tickets-list`}></Redirect_After_Success>
-        setSubmitting(false);
+        navigate(`/redirect-after-success/?operation-msg=Ticket&redirect-page-name=Tickets List&redirect-url=/tickets/tickets-list`);         
+        setSubmitting(false);     
       }).catch((error)=>{
-        console.error(error);
-        setSubmitting(false);
+        console.error(error);     
+        setSubmitting(false);   
       })
     }
   }, [errors]);
@@ -86,7 +84,7 @@ const Ticket_Create = () => {
         <label htmlFor='issue_description'>Issue Description:</label>
         <input type='text' id='issue_description' name='issue_description' value={formData.issue_description} onChange={handleChange}/>
         {errors.issue_description ? <p>{errors.issue_description}</p> : null}
-        <DropDown onHandleChange = {setFormData} dropDownData = {statusData} selectOptionId = 'status_id' />
+        <DropDown onHandleChange = {setFormData} dropDownData = {statusData} selectName= 'status_id' />
         {errors.status_id ? <p>{errors.status_id}</p> : null}
         <button type='submit'>Create Ticket</button>
       </form>
