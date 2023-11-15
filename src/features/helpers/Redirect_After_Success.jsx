@@ -10,10 +10,13 @@ const Redirect_After_Success = () =>{
   const redirect_page_name = queryParameters.get('redirect-page-name')
   const redirect_url = queryParameters.get('redirect-url')
 
-  useEffect (()=>{    
+  useEffect (()=>{
     if (progress<90){
       setTimeout(()=>{
         setProgress((prevProgress) => (prevProgress + 10));
+        if(progress>=80){
+          redirect()
+        } 
       },400)
     }
   },[progress]);
@@ -21,11 +24,7 @@ const Redirect_After_Success = () =>{
   const redirect = ()=>{
       navigate(redirect_url);
   };
-  if(progress>=90){
-    redirect()
-  } 
-  
-  
+
   return (
   <>
     <div>
